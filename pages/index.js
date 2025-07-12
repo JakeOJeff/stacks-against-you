@@ -16,8 +16,36 @@ export default function Home() {
           <h2 className="font-bold text-gray-300">Join or Host a Party!</h2>
 
           <div className="flex gap-2 m-2">
-            <Link href="/host" className={`${btnTWStyle} bg-gray-700 hover:bg-[url('/diamonds-design.png')] bg-cover bg-center transition-all duration-500`}>Host Party</Link>
-            <Link href="/join" className={`${btnTWStyle} bg-gray-800`}>Join Party</Link>
+<div className="relative w-64 h-16 overflow-hidden rounded-lg group">
+  {/* Static background layer */}
+  <div className="absolute inset-0 bg-gray-700 transition-all duration-500 rounded-lg"></div>
+
+  {/* Sliding background image */}
+  <div className="absolute inset-0 bg-[url('/diamonds-design.png')] bg-cover bg-center translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out rounded-lg"></div>
+
+  {/* The actual clickable link content */}
+  <Link
+    href="/host"
+    className={`relative z-10 w-full h-full flex items-center justify-center ${btnTWStyle} text-white`}
+  >
+    Host Party
+  </Link>
+</div>
+<div className="relative w-64 h-16 overflow-hidden rounded-lg group">
+  {/* Static background layer */}
+  <div className="absolute inset-0 bg-gray-700 transition-all duration-500 rounded-lg"></div>
+
+  {/* Sliding background image */}
+  <div className="absolute inset-0 bg-[url('/diamonds-design.png')] bg-cover bg-center translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out rounded-lg"></div>
+
+  {/* The actual clickable link content */}
+  <Link
+    href="/host"
+    className={`relative z-10 w-full h-full flex items-center justify-center ${btnTWStyle} text-white`}
+  >
+    Join Party
+  </Link>
+</div>
           </div>
         </div>
 
