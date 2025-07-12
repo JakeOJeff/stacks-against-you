@@ -13,7 +13,7 @@ export default function Home() {
       <div><div className="flex flex-col p-8 sm:p-12 md:container  bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 text-center">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">Stacks Against You</h1>
         <h2 className="text-xl sm:text-2xl font-bold text-gray-300 mt-2">Join or Host a Party!</h2>
-        <h3 className="text-gray-400 mt-1">You don't have anyone. You have yourself.</h3>
+        <h3 className="text-gray-400 mt-1">You don&apost have anyone. You have yourself.</h3>
 
         <div className="flex gap-2 justify-center mt-6 flex-wrap">
           {[
