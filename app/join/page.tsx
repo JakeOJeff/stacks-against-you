@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react"
-
+import { socket } from "@/lib/socketClient";
 
 export default function Join() {
     const [room, setRoom] = useState("");
@@ -16,6 +16,17 @@ export default function Join() {
     const handleSendMessage = (message: string) => {
         console.log(message);
     }
+    // Use Socket Join
+    useEffect{() => {
+        socket.on("user-joined", (message) => {
+            setMessages((prev) => [...prev, { sender: "system", message }]);
+        });
+
+        return () => {
+            socket.off("user-joined");
+            socket.off("message");
+        }
+    }}
 
     return (
         <main>
