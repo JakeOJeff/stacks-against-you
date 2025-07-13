@@ -17,13 +17,18 @@ app.prepare().then(() => {
     io.on("connection", (socket) => {
         console.log(`A user connected: ${socket.id}`);
 
+        socket.on("join-room", ({room, username}) => {
+            socket.join(room);
+            console.log(`User ${socket.id} joined room: ${room}`);
+            socket.to(room).emit("user-joined", `${username}`);
+        })
         socket.on("disconnect", () => {
-            console.log("A user disconnected");
+            console.log(`A user disconnected ${socket.id}`);
         });
 
         // Add your socket event handlers here
     });
-
+    
     httpServer.listen(port, () => {
         console.log(`Server is running on http://${hostname}:${port}`);
     });
