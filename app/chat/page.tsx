@@ -18,15 +18,22 @@ export default function Chat() {
     }
     return (
         <div>
-            <div className="h-[500px] overflow-y-auto p-4 mb-4 bg-gray-200 border-2 rounded-lg" >{messages.map((msg, index) => (
-                <ChatMessage
-                    key={index}
-                    sender={msg.sender}
-                    message={msg.message}
-                    isOwnMessage={msg.sender === userName} />
-            ))};
-            </div>
-            <div><ChatForm onSendMessage={(message) => console.log(message)} /></div>
+            {(!joined) ? (
+                <div className="flex flex-col items-center justify-center">No Room Loaded?</div>
+            ) : (
+                <div>
+                    <div className="h-[500px] overflow-y-auto p-4 mb-4 bg-gray-200 border-2 rounded-lg" >{messages.map((msg, index) => (
+                        <ChatMessage
+                            key={index}
+                            sender={msg.sender}
+                            message={msg.message}
+                            isOwnMessage={msg.sender === userName} />
+                    ))};
+                    </div>
+                    <div><ChatForm onSendMessage={(message) => console.log(message)} /></div>
+                </div>
+            )}
+
         </div>
 
 
