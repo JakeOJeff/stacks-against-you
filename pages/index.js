@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from 'next/image' // Logo Font is Pristina
 
 const btnStyle = {
   container: "relative w-40 sm:w-48 h-12 overflow-hidden rounded-3xl group",
@@ -11,9 +12,14 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-500 to-gray-950">
       <div><div className="flex flex-col p-8 sm:p-12 md:container  bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 text-center">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">Stacks Against You</h1>
+        <Image
+          src="/logo.png"
+          width={1000/1.4}
+          height={220/1.4}
+          alt="Main Logo"
+        /> 
         <h2 className="text-xl sm:text-2xl font-bold text-gray-300 mt-2">Join or Host a Party!</h2>
-        <h3 className="text-gray-400 mt-1">You don&apost have anyone. You have yourself.</h3>
+        <h3 className="text-gray-400 mt-1">You do not have anyone. You have yourself.</h3>
 
         <div className="flex gap-2 justify-center mt-6 flex-wrap">
           {[
@@ -28,7 +34,7 @@ export default function Home() {
           ))}
         </div>
       </div></div>
-      
+
     </main>
   );
 }

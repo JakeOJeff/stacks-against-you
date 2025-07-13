@@ -25,13 +25,13 @@ export default function Join() {
       <h2 className="text-xl font-bold">Join a Party</h2>
       <input
         placeholder="Party Code"
-        className="border p-2"
+        className="border p-3 rounded-b-3xl rounded-t-2xl "
         value={code}
         onChange={e => setCode(e.target.value)}
       />
       <input
-        placeholder="Your Name"
-        className="border p-2"
+        placeholder="Nickname"
+        className="border p-3 rounded-b-3xl rounded-t-2xl "
         value={name}
         onChange={e => setName(e.target.value)}
       />
