@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import WebSocketClient from '../components/WebSocketClient';
+import WebSocketClient from '../temp/components/WebSocketClient';
 
 export default function Party() {
   const router = useRouter();
