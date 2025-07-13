@@ -15,7 +15,7 @@ export default function Join() {
         const res = await fetch('/api/party', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'join', code: code.toUpperCase(), name }),
+            body: JSON.stringify({ type: 'join', code: code.toUpperCase(), name: name.trim() }),
         });
 
         if (res.ok) {
