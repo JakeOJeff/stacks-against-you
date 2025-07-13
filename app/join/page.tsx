@@ -1,9 +1,9 @@
-// join/pages.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { setUserSession } from "@/lib/userSession";
 import { socket } from "@/lib/socketClient";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function Join() {
     const [room, setRoom] = useState("");
@@ -12,20 +12,18 @@ export default function Join() {
 
     const handleJoinRoom = () => {
         if (!room || !userName) return;
-
-        socket.emit("join-room", { room, userName });
-
-        // Pass room and username via URL query parameters
-        router.push(`/chat?room=${encodeURIComponent(room)}&user=${encodeURIComponent(userName)}`);
+        setUserSession(room, userName);
+        router.push("/chat");
     };
 
+
     useEffect(() => {
-        socket.on("user-joined", (message) => {
-            console.log("user-joined:", message);
+        socket.on("connect", () => {
+            console.log("✅ Connected to socket:", socket.id);
         });
 
         return () => {
-            socket.off("user-joined");
+            socket.off("connect");
         };
     }, []);
 
