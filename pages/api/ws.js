@@ -3,7 +3,9 @@ import { parties } from './party';
 
 const wss = new WebSocketServer({ noServer: true });
 
-// This will be handled by Next.js's server
+// Store connected clients by party code
+const clientsByParty = {};
+
 export default function handler(req, res) {
   if (!res.socket.server.wss) {
     res.socket.server.wss = wss;
@@ -13,34 +15,51 @@ export default function handler(req, res) {
       const code = searchParams.get('code');
       
       if (!parties[code]) {
-        ws.close();
+        ws.close(1000, 'Party not found');
         return;
       }
+
+      // Add client to party group
+      if (!clientsByParty[code]) {
+        clientsByParty[code] = new Set();
+      }
+      clientsByParty[code].add(ws);
 
       // Send initial party data
       ws.send(JSON.stringify({
         type: 'update',
         players: parties[code].players,
-        countdown: parties[code].selfDestructTimeout ? 60 : null
+        countdown: parties[code].selfDestructTimeout ? 
+          Math.ceil((parties[code].selfDestructTimeout._idleStart + parties[code].selfDestructTimeout._idleTimeout - Date.now()) / 1000) : null
       }));
 
-      // Broadcast updates to all clients when party changes
+      // Broadcast updates to all clients in the party when changes occur
       const broadcastUpdate = () => {
-        wss.clients.forEach(client => {
+        if (!parties[code]) return;
+        
+        const message = JSON.stringify({
+          type: 'update',
+          players: parties[code].players,
+          countdown: parties[code].selfDestructTimeout ? 
+            Math.ceil((parties[code].selfDestructTimeout._idleStart + parties[code].selfDestructTimeout._idleTimeout - Date.now()) / 1000) : null
+        });
+
+        clientsByParty[code]?.forEach(client => {
           if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({
-              type: 'update',
-              players: parties[code].players,
-              countdown: parties[code].selfDestructTimeout ? 60 : null
-            }));
+            client.send(message);
           }
         });
       };
 
+      // Set up periodic updates (every second)
       const interval = setInterval(broadcastUpdate, 1000);
       
       ws.on('close', () => {
         clearInterval(interval);
+        clientsByParty[code]?.delete(ws);
+        if (clientsByParty[code]?.size === 0) {
+          delete clientsByParty[code];
+        }
       });
     });
   }

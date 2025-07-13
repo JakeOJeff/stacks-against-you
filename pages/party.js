@@ -8,82 +8,71 @@ export default function PartyRoom() {
   const [players, setPlayers] = useState([]);
   const [countdown, setCountdown] = useState(null);
   const [isHost, setIsHost] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
+  const [hostName, setHostName] = useState('');
   const intervalRef = useRef(null);
   const wsRef = useRef(null);
 
+  // Fetch initial party data
+  useEffect(() => {
+    if (!code) return;
+
+    const fetchPartyData = async () => {
+      try {
+        const res = await fetch(`/api/party?code=${code}`);
+        if (res.ok) {
+          const data = await res.json();
+          setPlayers(data.players || []);
+          setHostName(data.host || '');
+          setCountdown(data.countdown || null);
+          setIsHost(data.host === name);
+        }
+      } catch (error) {
+        console.error('Failed to fetch party data:', error);
+      }
+    };
+
+    fetchPartyData();
+  }, [code, name]);
+
   // Initialize WebSocket connection
   useEffect(() => {
-    if (!code || !name) return;
+    if (!code || !name || isConnected) return;
 
-    // Connect to WebSocket for real-time updates
-    wsRef.current = new WebSocket(`wss://${window.location.host}/api/ws?code=${code}`);
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}/api/ws?code=${code}`;
     
+    wsRef.current = new WebSocket(wsUrl);
+    
+    wsRef.current.onopen = () => {
+      setIsConnected(true);
+      console.log('WebSocket connected');
+    };
+
     wsRef.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.type === 'update') {
-        setPlayers(data.players);
-        setCountdown(data.countdown);
+        setPlayers(data.players || []);
+        setHostName(data.host || '');
+        setCountdown(data.countdown || null);
       }
     };
 
-    return () => {
-      if (wsRef.current) wsRef.current.close();
+    wsRef.current.onerror = (error) => {
+      console.error('WebSocket error:', error);
     };
-  }, [code, name]);
 
-  // Check if user is host and set up leave detection
-  useEffect(() => {
-    if (!code || !name) return;
+    wsRef.current.onclose = () => {
+      setIsConnected(false);
+      console.log('WebSocket disconnected');
+    };
 
-    const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
-      const [name, value] = cookie.split('=').map(c => c.trim());
-      cookies[name] = value;
-      return cookies;
-    }, {});
-
-    const sessionToken = cookies['session_token'];
-    if (!sessionToken) return;
-
-    // In a real app, you'd verify this with the server
-    setIsHost(!!cookies['host_token']);
-
-    // Handle page visibility changes (tab switching)
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        // If host leaves, notify server
-        if (isHost) {
-          fetch('/api/party', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'host-left', code }),
-            credentials: 'include'
-          });
-        }
+    return () => {
+      if (wsRef.current) {
+        wsRef.current.close();
       }
     };
-
-    // Handle page unload (closing tab)
-    const handleBeforeUnload = () => {
-      fetch('/api/party', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'leave', code }),
-        credentials: 'include',
-        keepalive: true // Ensures request completes even if page unloads
-      });
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      
-      // Clean up WebSocket
-      if (wsRef.current) wsRef.current.close();
-    };
-  }, [code, name, isHost]);
+  }, [code, name, isConnected]);
 
   // Countdown timer
   useEffect(() => {
@@ -96,6 +85,7 @@ export default function PartyRoom() {
       setCountdown(prev => {
         if (prev <= 1) {
           clearInterval(intervalRef.current);
+          router.push('/'); // Redirect when party ends
           return null;
         }
         return prev - 1;
@@ -103,7 +93,7 @@ export default function PartyRoom() {
     }, 1000);
 
     return () => clearInterval(intervalRef.current);
-  }, [countdown]);
+  }, [countdown, router]);
 
   return (
     <div className="p-8">
@@ -121,7 +111,7 @@ export default function PartyRoom() {
         <ul className="list-disc list-inside">
           {players.map((player, i) => (
             <li key={i}>
-              {player} {player === parties[code]?.host && '👑'}
+              {player} {player === hostName && '👑'}
             </li>
           ))}
         </ul>

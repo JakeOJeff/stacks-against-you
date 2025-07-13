@@ -35,19 +35,20 @@ export default async function handler(req, res) {
     // Player joins existing party
     if (type === 'join') {
       if (!parties[code]) return res.status(404).json({ error: 'Party not found' });
-      
+
       const sessionId = generateToken();
       parties[code].players.push(name);
       playerSessions[sessionId] = { code, name, isHost: false };
 
       res.setHeader('Set-Cookie', `session_token=${sessionId}; Path=/; HttpOnly; SameSite=Strict`);
+      broadcastUpdate(code); // Add this line
       return res.status(200).json({ code });
     }
 
     // Host leaves (starts self-destruct)
     if (type === 'host-left') {
-      if (!parties[code] || !sessionToken || !playerSessions[sessionToken] || 
-          !playerSessions[sessionToken].isHost) {
+      if (!parties[code] || !sessionToken || !playerSessions[sessionToken] ||
+        !playerSessions[sessionToken].isHost) {
         return res.status(403).json({ error: 'Not authorized' });
       }
 
@@ -68,7 +69,7 @@ export default async function handler(req, res) {
       const session = playerSessions[sessionToken];
       if (parties[session.code]) {
         parties[session.code].players = parties[session.code].players.filter(p => p !== session.name);
-        
+
         // If host leaves, start self-destruct if not already started
         if (session.isHost && !parties[session.code].selfDestructTimeout) {
           parties[session.code].selfDestructTimeout = setTimeout(() => {
@@ -78,6 +79,7 @@ export default async function handler(req, res) {
       }
 
       delete playerSessions[sessionToken];
+      broadcastUpdate(session.code); // Add this line
       return res.status(200).json({ message: 'Left party' });
     }
 
@@ -87,7 +89,7 @@ export default async function handler(req, res) {
   if (method === 'GET') {
     const { code } = req.query;
     if (!parties[code]) return res.status(404).json({ error: 'Party not found' });
-    
+
     // Return party info but without sensitive data
     return res.status(200).json({
       host: parties[code].host,
@@ -106,4 +108,21 @@ function generateCode() {
 
 function generateToken() {
   return Math.random().toString(36).substring(2);
+}
+
+function broadcastUpdate(code) {
+  if (clientsByParty && clientsByParty[code]) {
+    const message = JSON.stringify({
+      type: 'update',
+      players: parties[code].players,
+      countdown: parties[code].selfDestructTimeout ?
+        Math.ceil((parties[code].selfDestructTimeout._idleStart + parties[code].selfDestructTimeout._idleTimeout - Date.now()) / 1000) : null
+    });
+
+    clientsByParty[code].forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  }
 }
