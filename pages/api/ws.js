@@ -17,55 +17,42 @@ export default function handler(req, res) {
         return;
       }
 
-      // Add to party connections
-      parties[code].connections.add(ws);
-
-      // Send current player list
-      ws.send(JSON.stringify({
-        type: 'player_list',
-        players: parties[code].players
+      parties[code].sockets.add(ws);
+      ws.send(JSON.stringify({ 
+        type: 'player_list', 
+        players: parties[code].players 
       }));
 
       ws.on('message', (message) => {
         try {
           const data = JSON.parse(message);
-          
-          if (data.type === 'chat_message') {
-            // Broadcast to all in party
-            parties[code].connections.forEach(client => {
-              if (client !== ws && client.readyState === ws.OPEN) {
+          if (data.type === 'chat') {
+            parties[code].sockets.forEach(client => {
+              if (client !== ws) {
                 client.send(JSON.stringify({
-                  type: 'chat_message',
-                  player: name,
-                  content: data.content,
-                  timestamp: new Date().toISOString()
+                  type: 'chat',
+                  from: name,
+                  message: data.message
                 }));
               }
             });
           }
         } catch (error) {
-          console.error('Error processing message:', error);
+          console.error('Message error:', error);
         }
       });
 
       ws.on('close', () => {
-        parties[code]?.connections.delete(ws);
+        parties[code]?.sockets.delete(ws);
       });
     });
   }
 
-  if (req.method === 'GET' && req.headers.upgrade === 'websocket') {
-    res.socket.server.wss = wss;
-    res.socket.server.wss.handleUpgrade(
-      req,
-      req.socket,
-      Buffer.alloc(0),
-      (ws) => {
-        wss.emit('connection', ws, req);
-      }
-    );
-    res.end();
+  if (req.headers.upgrade === 'websocket') {
+    wss.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
+      wss.emit('connection', ws, req);
+    });
   } else {
-    res.status(426).send('Upgrade required');
+    res.status(426).send('WebSocket only');
   }
 }
