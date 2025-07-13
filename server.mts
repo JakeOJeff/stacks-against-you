@@ -19,7 +19,7 @@ app.prepare().then(() => {
         socket.on("join-room", ({ room, userName }) => {
             socket.join(room);
             console.log(`User ${socket.id} joined room: ${room}`);
-            socket.to(room).emit("user-joined", `${userName}`);
+            socket.to(room).emit("user-joined", `${userName} has arrived!`);
         });
 
 
