@@ -35,11 +35,11 @@ export default function Host() {
                     required
                 />
                 <div className="flex gap-2 justify-center mt-6 flex-wrap">
-                <div className={btnStyle.container}>
-                    <div className={btnStyle.background} />
-                    <div className={btnStyle.image} />
-                    <button onClick={handleHost} className={btnStyle.link}>Create Party</button>
-                </div>
+                    <div className={btnStyle.container}>
+                        <div className={btnStyle.background} />
+                        <div className={btnStyle.image} />
+                        <button onClick={handleHost} className={btnStyle.link}>Create Party</button>
+                    </div>
                 </div>
             </div>
             </div>
