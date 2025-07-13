@@ -25,8 +25,7 @@ app.prepare().then(() => {
 
         socket.on("send-message", ({ room, message, sender }) => {
             console.log(`Message from ${sender} in room ${room}: ${message}`);
-            io.to(room).emit("message", { sender, message });
-
+            socket.to(room).emit("message", { sender, message });
         });
 
         socket.on("disconnect", () => {
@@ -38,3 +37,5 @@ app.prepare().then(() => {
         console.log(`Server is running on http://${hostname}:${port}`);
     });
 });
+
+
