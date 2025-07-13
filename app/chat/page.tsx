@@ -13,7 +13,7 @@ export default function Chat() {
         { sender: string; message: string }[]
     >([]);
     const [userName, setUserName] = useState("");
-    const handlleSendMessage = (message: string) => {
+    const handleSendMessage = (message: string) => {
         console.log(message);
     }
     return (
