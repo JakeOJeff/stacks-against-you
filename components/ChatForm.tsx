@@ -23,7 +23,10 @@ const ChatForm = ({
         onChange={(e) => setMessage(e.target.value)}
         type="text" className="flex-1 px-4 border-2 py-2 rounded-lg focus:outline-none"
          placeholder="Type your message" />
+
+         <button type="submit" className="px-4 py-2 text-white rorunded-lg bg-green-300">Send</button>
     </form>
+
   );
 }
 
