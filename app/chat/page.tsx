@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { socket } from "@/lib/socketClient";
 import { getUserSession } from "@/lib/userSession";
 import ChatForm from "@/components/ChatForm";
@@ -13,10 +13,16 @@ export default function Chat() {
     { sender: string; message: string }[]
   >([]);
 
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  // Scroll to bottom whenever messages update
   useEffect(() => {
-    if (!room || !user) {
-      return;
-    }
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Setup socket listeners on mount
+  useEffect(() => {
+    if (!room || !user) return;
 
     const handleConnect = () => {
       console.log("✅ Socket connected, joining room:", room);
@@ -24,7 +30,6 @@ export default function Chat() {
       setJoined(true);
     };
 
-    // Handle if already connected
     if (socket.connected) {
       handleConnect();
     } else {
@@ -46,19 +51,31 @@ export default function Chat() {
     };
   }, [room, user]);
 
+  // Handle no session case
   if (!room || !user) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <p className="text-center text-lg">❌ No session found. Please join from the home page.</p>
+        <p className="text-center text-lg">
+          ❌ No session found. Please join from the home page.
+        </p>
       </div>
     );
+  }
+
+  // Send a message
+  function handleSendMessage(message: string) {
+    if (!room || !user) return;
+    socket.emit("send-message", { room, sender: user, message });
+    setMessages((prev) => [...prev, { sender: user, message }]);
   }
 
   return (
     <div className="p-4">
       {!joined ? (
         <div className="flex flex-col items-center justify-center">
-          <p>🔄 Connecting to room <strong>{room}</strong>...</p>
+          <p>
+            🔄 Connecting to room <strong>{room}</strong>...
+          </p>
         </div>
       ) : (
         <div>
@@ -71,16 +88,11 @@ export default function Chat() {
                 isOwnMessage={msg.sender === user}
               />
             ))}
+            <div ref={bottomRef} /> {/* 👈 Scroll anchor */}
           </div>
           <ChatForm onSendMessage={handleSendMessage} />
         </div>
       )}
     </div>
   );
-
-  function handleSendMessage(message: string) {
-    if (!room || !user) return;
-    socket.emit("send-message", { room, sender: user, message });
-    setMessages((prev) => [...prev, { sender: user, message }]);
-  }
 }
