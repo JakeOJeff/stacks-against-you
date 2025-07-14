@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useState } from 'react'
-import { Picker } from 'emoji-mart';
+import dynamic from 'next/dynamic';
+import data from '@emoji-mart/data';
+import { Emoji } from 'emoji-mart';
+
+const Picker = dynamic(() => import('@emoji-mart/react'), { ssr: false });
+
 
 
 
