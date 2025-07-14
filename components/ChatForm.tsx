@@ -35,7 +35,7 @@ const ChatForm = ({
         <input      value={message}  // ← add this line
 
         onChange={(e) => setMessage(e.target.value)}
-        type="text" className="flex-1 px-4 border-1 py-2 rounded-lg focus:outline-none text-white font-bold"
+        type="text" className="border-gray-900 flex-1 px-4 border-1 py-2 rounded-lg focus:outline-none text-white font-bold"
          placeholder="Type your message" />
         <button
           type="button"

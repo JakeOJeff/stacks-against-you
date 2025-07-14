@@ -20,6 +20,13 @@ export default function Chat() {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, []);
+
     // Setup socket listeners on mount
     useEffect(() => {
         if (!room || !user) return;
@@ -68,20 +75,28 @@ export default function Chat() {
     }
 
     return (
-        <main className="justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-500 to-gray-950">
+        <main className="justify-center min-h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-500 to-gray-950">
             <div className="p-4">
                 {!joined ? (
                     <div className="flex flex-col items-center justify-center">
                         <p>
                             🔄 Connecting to room <strong>{room}</strong>...
                         </p>
-                                                <p>
+                        <p>
                             If you are seeing this, websockets are not working, highly recommend to run the software on your Desktop [npm run dev:socket] <strong>{room}</strong>...
                         </p>
                     </div>
                 ) : (
-                    <div>
-                        <div className="h-[500px] overflow-y-auto p-4 mb-4 bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border-1 ">
+                    <div className="flex flex-col justify-center items-center min-h-screen">
+                        <div className="w-[80vw] h-[500px] overflow-y-auto p-4 mb-4 bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700
+                        [&::-webkit-scrollbar]:w-1
+                        [&::-webkit-scrollbar]:h-3
+                        [&::-webkit-scrollbar-track]:rounded-full
+                        [&::-webkit-scrollbar-track]:bg-gray-950/25
+                        [&::-webkit-scrollbar-thumb]:rounded-full
+                        [&::-webkit-scrollbar-thumb]:bg-gray-900/75
+                        [&::-webkit-scrollbar-thumb:hover]:bg-gray-800/75
+                        [&::-webkit-scrollbar-thumb]:transition-colors">
                             {messages.map((msg, index) => (
                                 <ChatMessage
                                     key={index}
@@ -91,9 +106,15 @@ export default function Chat() {
                                 />
                             ))}
                             <div ref={bottomRef} /> {/* 👈 Scroll anchor */}
+
                         </div>
-                        <ChatForm onSendMessage={handleSendMessage} />
+                        <div className="w-[80vw] p-4 mb-4 bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700">
+                            <ChatForm onSendMessage={handleSendMessage} />
+
+                        </div>
+
                     </div>
+
                 )}
             </div>
         </main>
