@@ -11,14 +11,16 @@ const btnStyle = {
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-500 to-gray-950">
+
+    <main className="flex flex-col items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
+
       <div><div className="flex flex-col p-8 sm:p-12 md:container  bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 text-center">
         <Image
           src="/logo.png"
-          width={1000/1.4}
-          height={220/1.4}
+          width={1000 / 1.4}
+          height={220 / 1.4}
           alt="Main Logo"
-        /> 
+        />
         <h2 className="text-xl sm:text-2xl font-bold text-gray-300 mt-2">Join or Host a Party!</h2>
         <h3 className="text-gray-400 mt-1">You do not have anyone. You have yourself.</h3>
 
