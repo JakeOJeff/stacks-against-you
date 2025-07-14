@@ -61,7 +61,7 @@ export default function Chat() {
     if (!room || !user) {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen">
-                <p className="text-center text-lg">
+                <p className="text-center text-lg text-white">
                     ❌ No session found. Please join from the home page.
                 </p>
             </div>
@@ -79,12 +79,12 @@ export default function Chat() {
         <main className="flex flex-col overflow-hidden items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
             <div className="p-4">
                 {!joined ? (
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex flex-col items-center justify-center text-white text-2xl">
                         <p>
                             🔄 Connecting to room <strong>{room}</strong>...
                         </p>
                         <p>
-                            If you are seeing this, websockets are not working, highly recommend to run the software on your Desktop [npm run dev:socket] <strong>{room}</strong>...
+                            An Error has occured: Websockets are not working, Highly recommend to run the software LOCALLY on your Desktop <strong>[npm run dev:socket]</strong>  <strong>{room}</strong>...
                         </p>
                     </div>
                 ) : (
