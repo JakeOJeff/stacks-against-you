@@ -9,6 +9,7 @@ interface ChatMessageProps {
 const ChatMessage = ( {sender, message, isOwnMessage }: ChatMessageProps) => {
   const isSystemMessage = sender === "system";
     return (
+      
     <div className={`flex ${isSystemMessage ? "justify-center" : isOwnMessage ? "justify-end" : "justify-start"} mb-3`}>
       <div className={`max-w-xs px-4 py-2 rounded-lg ${
         isSystemMessage
