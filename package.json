@@ -4,34 +4,24 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:socket": "set NODE_OPTIONS=--loader ts-node/esm --trace-warnings && ts-node server.mts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@emoji-mart/data": "^1.2.1",
-    "@emoji-mart/react": "^1.1.1",
-    "emoji-mart": "^5.6.0",
-    "express": "^5.1.0",
-    "force": "^0.0.3",
-    "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "socket.io": "^4.8.1",
-    "socket.io-client": "^4.8.1",
-    "ts-node": "^10.9.2"
+    "next": "15.3.5"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
-    "@types/express": "^5.0.3",
+    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@eslint/eslintrc": "^3"
   }
 }
