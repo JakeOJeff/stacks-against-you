@@ -27,6 +27,8 @@ const ChatForm = ({
     }
     const addEmoji = (emoji: any) => {
         setMessage((prev) => prev + emoji.native);
+        // Close after usage
+          setShowEmojiPicker(false); 
     };
   return (
     <form onSubmit={handleSubmit} className='flex gap-2'>
@@ -46,7 +48,7 @@ const ChatForm = ({
     
     {showEmojiPicker && (
         <div className="absolute bottom-14 left-0 z-10">
-          <Picker onSelect={addEmoji} />
+          <Picker data={data} onEmojiSelect={addEmoji} theme="dark" />
         </div>
       )}
     </form>
