@@ -75,6 +75,9 @@ export default function Chat() {
                         <p>
                             🔄 Connecting to room <strong>{room}</strong>...
                         </p>
+                                                <p>
+                            If you are seeing this, websockets are not working, highly recommend to run the software on your Desktop [npm run dev:socket] <strong>{room}</strong>...
+                        </p>
                     </div>
                 ) : (
                     <div>
