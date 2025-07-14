@@ -25,7 +25,7 @@ const ChatForm = ({
         type="text" className="flex-1 px-4 border-2 py-2 rounded-lg focus:outline-none"
          placeholder="Type your message" />
 
-         <button type="submit" className="px-4 py-2 text-white rounded-lg bg-green-300">Send</button>
+         <button type="submit" className="px-4 py-2 cursor-pointer text-white rounded-lg duration-500 bg-gray-900 hover:bg-gray-700">Send</button>
     </form>
 
   );
