@@ -35,7 +35,7 @@ export default function Host() {
     }, []);
 
     return (
-    <main className="flex flex-col items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-500 to-gray-950">
+    <main className="flex flex-col items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
             <div className="flex flex-col p-8 sm:p-12 items-center bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 text-center">
                 <p className="text-white mb-4">Room ID: <strong>{room}</strong></p>
                 <input

@@ -5,6 +5,7 @@ import { socket } from "@/lib/socketClient";
 import { getUserSession } from "@/lib/userSession";
 import ChatForm from "@/components/ChatForm";
 import ChatMessage from "@/components/ChatMessage";
+import Link from 'next/link'
 
 export default function Chat() {
     const { room, userName: user } = getUserSession();
@@ -75,7 +76,7 @@ export default function Chat() {
     }
 
     return (
-        <main className="justify-center min-h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-500 to-gray-950">
+        <main className="flex flex-col overflow-hidden items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
             <div className="p-4">
                 {!joined ? (
                     <div className="flex flex-col items-center justify-center">
@@ -88,6 +89,14 @@ export default function Chat() {
                     </div>
                 ) : (
                     <div className="flex flex-col justify-center items-center min-h-screen">
+                        <div className="flex w-[80vw] p-4 mb-4 bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 justify-between items-center">
+                            <div className="flex">
+                                <div className="text-white">Party Room:</div>
+                                <div className="text-white font-bold ml-2">{room}</div>
+                            </div>
+                            <Link className= "cursor-pointer duration-500 text-white hover:text-red-500 transition" href="/join" >Exit</Link>
+                        </div>
+
                         <div className="w-[80vw] h-[500px] overflow-y-auto p-4 mb-4 bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700
                         [&::-webkit-scrollbar]:w-1
                         [&::-webkit-scrollbar]:h-3
