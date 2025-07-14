@@ -1,8 +1,0 @@
-[build]
-  command = "npm run build"
-  publish = "/"  # <- This must match the folder created by next export
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
