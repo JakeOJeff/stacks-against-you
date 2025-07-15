@@ -15,7 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Stacks Against You",
   description: "Privacy Focused",
+  icons: {
+    icon: "/favicon.ico", // or "/app/favicon.ico" if it's in public/app/
+  },
 };
+
 
 export default function RootLayout({
   children,
