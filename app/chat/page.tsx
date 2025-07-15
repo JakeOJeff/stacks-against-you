@@ -60,9 +60,9 @@ export default function Chat() {
     // Handle no session case
     if (!room || !user) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen">
+            <div className="bg-gray-950 flex flex-col items-center justify-center min-h-screen">
                 <p className="text-center text-lg text-white">
-                    ❌ No session found. Please join from the home page.
+                    ❌<strong>No session found.</strong>  Please join from the <Link className="text-gray-400 underline" href="/">Home</Link> page.
                 </p>
             </div>
         );
@@ -79,12 +79,15 @@ export default function Chat() {
         <main className="flex flex-col overflow-hidden items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
             <div className="p-4">
                 {!joined ? (
-                    <div className="flex flex-col items-center justify-center text-white text-2xl">
-                        <p>
+                    <div className="flex flex-col items-center justify-center text-white text-md">
+                        <p className="text-2xl">
                             🔄 Connecting to room <strong>{room}</strong>...
                         </p>
                         <p>
-                            An Error has occured: Websockets are not working, Highly recommend to run software LOCALLY on your Desktop <strong>[npm run dev:socket]</strong>  <strong>{room}</strong>...
+                            An Error has occured: Vercel Websockets are WIP 
+                        </p>
+                        <p>
+                            Highly recommend to run software LOCALLY on your Desktop <strong>[npm run dev:socket]</strong>
                         </p>
                     </div>
                 ) : (
@@ -92,7 +95,7 @@ export default function Chat() {
                         <div className="flex w-[80vw] p-4 mb-4 bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 justify-between items-center">
                             <div className="flex">
                                 <div className="text-white">Party Room:</div>
-                                <div className="text-white font-bold ml-2">{room}</div>
+                                <Link className="text-white font-bold ml-2" href="/room">{room}</Link>
                             </div>
                             <Link className= "cursor-pointer duration-500 text-white hover:text-red-500 transition" href="/join" >Exit</Link>
                         </div>
