@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: chat-app
+    env: node
+    branch: main
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run dev:socket
+    envVars:
+      - key: NODE_OPTIONS
+        value: --loader ts-node/esm --trace-warnings
+    autoDeploy: true
