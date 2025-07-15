@@ -3,7 +3,7 @@ services:
     name: stacks-against-you
     env: node
     branch: main
-    plan: free
+    rootDir: .
     buildCommand: npm install
     startCommand: npm run dev:socket
     envVars:
