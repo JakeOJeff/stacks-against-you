@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: chat-app
+    name: stacks-against-you
     env: node
     branch: main
     plan: free
