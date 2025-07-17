@@ -3,9 +3,10 @@ import next from "next";
 import { Server } from "socket.io";
 
 const dev = process.env.NODE_ENV !== "production";
-const port = parseInt(process.env.PORT || "3001", 10); // keep this
-const app = next({ dev, port }); // ✅ removed hostname
+const hostname = process.env.HOSTNAME || "localhost";
+const port = parseInt(process.env.PORT || "3000", 10);
 
+const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
@@ -21,6 +22,7 @@ app.prepare().then(() => {
             socket.to(room).emit("user-joined", `${userName} has arrived!`);
         });
 
+
         socket.on("send-message", ({ room, message, sender }) => {
             console.log(`Message from ${sender} in room ${room}: ${message}`);
             socket.to(room).emit("message", { sender, message });
@@ -32,6 +34,8 @@ app.prepare().then(() => {
     });
 
     httpServer.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+        console.log(`Server is running on http://${hostname}:${port}`);
     });
 });
+
+
