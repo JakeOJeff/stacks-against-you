@@ -31,24 +31,25 @@ const ChatForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex gap-2 relative'>
+    <form onSubmit={handleSubmit} className="flex gap-2 relative w-full items-center">
+
       <input
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         type="text"
-        className="border-gray-900 flex-1 px-4 border-none py-2 rounded-lg focus:outline-none text-white font-bold"
+        className="flex-shrink min-w-0 flex-grow border-gray-900 flex-1 px-4 border-none py-2 rounded-lg focus:outline-none text-white font-bold"
         placeholder="Type your message"
       />
       <button
         type="button"
         onClick={() => setShowEmojiPicker((prev) => !prev)}
-        className="cursor-pointer duration-500 text-xl bg-gray-800 rounded-l-full px-3 py-2 text-white hover:bg-gray-700"
+        className="flex-shrink-0 cursor-pointer duration-500  text-xl bg-gray-800 rounded-l-full px-3 py-2 text-white hover:bg-gray-700"
       >
         {lastUsedEmoji}
       </button>
       <button
         type="submit"
-        className="px-4 py-2 cursor-pointer text-white rounded-r-full duration-500 bg-gray-900 hover:bg-gray-700"
+        className="flex-shrink-0  px-4 py-2 cursor-pointer text-white rounded-r-full duration-500 bg-gray-900 hover:bg-gray-700"
       >
         Send
       </button>
