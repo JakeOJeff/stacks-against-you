@@ -15,6 +15,9 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Public Url
+To run the public Url ( Only stable releases ) : [stacks-against-you](https://jakeojeff.hackclub.app)
+
 # Stacks Against You Guide
 ## What is Stacks Against You?
 Stacks Against You is a privacy focused chatting app which is made on Websockets and works without a database. Caddy has been used to provide a secure reverse proxy to the host in terms of safety.
