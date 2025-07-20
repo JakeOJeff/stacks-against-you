@@ -33,5 +33,3 @@ EXPOSE 3000
 # Correct command for ES module .mts server
 CMD ["node", "--loader", "ts-node/esm", "server.mts"]
 
-# Ensure .next/cache is writable
-RUN mkdir -p .next/cache/images && chown -R nextjs:nextjs .next
