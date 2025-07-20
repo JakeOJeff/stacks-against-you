@@ -11,15 +11,15 @@ const btnStyle = {
 
 export default function Home() {
   return (
- <main className="flex flex-col items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
+    <main className="flex flex-col items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
 
-        <div>
-          <Link href="https://github.com/jakeojeff/stacks-against-you" className="ml-2 font-bold text-white p-2 pl-4 pr-4 rounded-t-full  hover:bg-white hover:text-gray-950/50 duration-500">Git</Link>
-                    <Link href="https://github.com/jakeojeff/stacks-against-you" className="ml-2 font-bold text-white p-2 pl-4 pr-4 rounded-t-full  hover:bg-amber-300 hover:text-gray-950/50 duration-500">Nest</Link>
-          <div className="w-[80vw] flex flex-col p-8 sm:p-12 md:container  bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 text-center">
-                  <div className="flex justify-end items-end w-full ">
-                    <Link href="/info" className="animate-pulse text-white text-2xl font-bold px-3 py-1 rounded-2xl hover:bg-gray-800 transition-colors duration-200">?</Link>
-                  </div>
+      <div>
+        <Link href="https://github.com/jakeojeff/stacks-against-you" className="ml-2 font-bold text-white p-2 pl-4 pr-4 rounded-t-full  hover:bg-white hover:text-gray-950/50 duration-500">Git</Link>
+        <Link href="https://github.com/jakeojeff/stacks-against-you" className="ml-2 font-bold text-white p-2 pl-4 pr-4 rounded-t-full  hover:bg-amber-300 hover:text-gray-950/50 duration-500">Nest</Link>
+        <div className="w-[80vw] flex flex-col p-8 sm:p-12 md:container  bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 text-center">
+          <div className="flex justify-end items-end w-full ">
+            <Link href="/info" className="animate-pulse text-white text-2xl font-bold px-3 py-1 rounded-2xl hover:bg-gray-800 transition-colors duration-200">?</Link>
+          </div>
           <Image
             src="/logo.png"
             width={1000 / 1.4}
@@ -42,6 +42,6 @@ export default function Home() {
           </div>
         </div></div>
 
-      </main>
+    </main>
   );
 }
