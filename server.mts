@@ -34,7 +34,7 @@ app.prepare().then(() => {
     });
 
     httpServer.listen(port, () => {
-        console.log(`Server is running on http://${hostname}:${port}`);
+        console.log(`Server is running on http://localhost:${port}`);
     });
 });
 
