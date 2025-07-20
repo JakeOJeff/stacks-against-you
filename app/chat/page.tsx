@@ -62,7 +62,7 @@ export default function Chat() {
         return (
             <div className="bg-gray-950 flex flex-col items-center justify-center min-h-screen">
                 <p className="text-center text-lg text-white">
-                    ❌<strong>No session found.</strong>  Please join from the <Link className="text-gray-400 underline" href="/">Home</Link> page.
+                    ❌<strong>No session found.</strong>  Please join from the <a href="/" className="underline font-bold hover:text-gray-500 duration-500">Home</a> page.
                 </p>
             </div>
         );
