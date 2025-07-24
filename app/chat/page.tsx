@@ -15,7 +15,16 @@ export default function Chat() {
     >([]);
 
     const bottomRef = useRef<HTMLDivElement | null>(null);
+    const [copied, setCopied] = useState(false);
 
+    const handleCopy = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        navigator.clipboard.writeText(room).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000); // Hide after 2 seconds
+        });
+
+    };
     // Scroll to bottom whenever messages update
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -84,7 +93,7 @@ export default function Chat() {
                             🔄 Connecting to room <strong>{room}</strong>...
                         </p>
                         <p>
-                            An Error has occured: Vercel Websockets are WIP 
+                            An Error has occured: Vercel Websockets are WIP
                         </p>
                         <p>
                             Highly recommend to run software LOCALLY on your Desktop <strong>[npm run dev:socket]</strong>
@@ -95,9 +104,20 @@ export default function Chat() {
                         <div className="flex w-[80vw] p-4 mb-4 bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 justify-between items-center">
                             <div className="flex">
                                 <div className="text-white">Party Room:</div>
-                                <Link className="text-white font-bold ml-2" href="/room">{room}</Link>
+                                <a
+                                    onClick={handleCopy}
+                                    className="text-white font-bold ml-2 cursor-pointer"
+                                >
+                                    {room}
+                                </a>
+
+                                {copied && (
+                                    <div className="absolute left-0 -top-6 bg-gray-600 text-white text-xs font-medium px-2 py-1 rounded shadow-lg">
+                                        Copied Room ID!
+                                    </div>
+                                )}
                             </div>
-                            <Link className= "cursor-pointer duration-500 text-white hover:text-red-500 transition" href="/join" >Exit</Link>
+                            <Link className="cursor-pointer duration-500 text-white hover:text-red-500 transition" href="/join" >Exit</Link>
                         </div>
 
                         <div className="w-[80vw] h-[500px] overflow-y-auto p-4 mb-4 bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700
