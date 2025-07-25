@@ -6,6 +6,7 @@ import { getUserSession } from "@/lib/userSession";
 import ChatForm from "@/components/ChatForm";
 import ChatMessage from "@/components/ChatMessage";
 import Link from 'next/link'
+import PageWrapper from "@/components/PageWrapper";
 
 export default function Chat() {
     const { room, userName: user } = getUserSession();
@@ -85,7 +86,9 @@ export default function Chat() {
     }
 
     return (
-        <main className="flex flex-col overflow-hidden items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
+           <PageWrapper>
+       
+             <main className="relative flex flex-col items-center justify-center h-screen overflow-hidden">
             <div className="p-4">
                 {!joined ? (
                     <div className="flex flex-col items-center justify-center text-white text-md">
@@ -150,5 +153,7 @@ export default function Chat() {
                 )}
             </div>
         </main>
+       </PageWrapper>
+
     );
 }

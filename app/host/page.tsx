@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { socket } from "@/lib/socketClient";
 import PageWrapper from "@/components/PageWrapper";
-import Silk from "@/components/Silk";
 
 const btnStyle = {
     container: "relative w-40 sm:w-48 h-12 overflow-hidden rounded-3xl group",

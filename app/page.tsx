@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import Silk from "@/components/Silk";
 import PageWrapper from "@/components/PageWrapper";
 const btnStyle = {
   container: "relative w-40 sm:w-48 h-12 overflow-hidden rounded-3xl group",

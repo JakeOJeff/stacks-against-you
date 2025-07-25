@@ -1,9 +1,14 @@
 "use client";
+
+import PageWrapper from "@/components/PageWrapper";
+
 export default function Info() {
 
 
     return (
-        <main className="flex flex-col justify-center items-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
+                   <PageWrapper>
+       
+             <main className="relative flex flex-col items-center justify-center h-screen overflow-hidden">
             <div>
                 <div className="w-[80vw] flex flex-col p-8 sm:p-12 items-start bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 text-center">
 
@@ -32,6 +37,7 @@ export default function Info() {
                 </div>
             </div>
 
-        </main>
+        </main> 
+        </PageWrapper>
     )
 }

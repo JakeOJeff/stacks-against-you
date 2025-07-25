@@ -4,6 +4,7 @@ import { setUserSession } from "@/lib/userSession";
 import { socket } from "@/lib/socketClient";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import PageWrapper from "@/components/PageWrapper";
 
 const btnStyle = {
     container: "relative w-40 sm:w-48 h-12 overflow-hidden rounded-3xl group",
@@ -34,7 +35,9 @@ export default function Join() {
     }, []);
 
     return (
-    <main className="flex flex-col items-center justify-center h-screen bg-gray-950 bg-radial-[at_0%_0%] from-gray-900 via-gray-800 to-gray-950">
+               <PageWrapper>
+       
+             <main className="relative flex flex-col items-center justify-center h-screen overflow-hidden">
             <div className="flex flex-col p-8 sm:p-12 items-center bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 text-center">
                 <input
                     type="text"
@@ -59,5 +62,6 @@ export default function Join() {
                 </div>
             </div>
         </main>
+         </PageWrapper>
     );
 }
