@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { socket } from "@/lib/socketClient";
 import PageWrapper from "@/components/PageWrapper";
+import Silk from "@/components/Silk";
 
 const btnStyle = {
     container: "relative w-40 sm:w-48 h-12 overflow-hidden rounded-3xl group",
@@ -39,6 +40,7 @@ export default function Host() {
         <PageWrapper>
 
             <main className="flex flex-col items-center justify-center h-screen">
+ 
                 <div className="flex flex-col p-8 sm:p-12 items-center bg-gray-900/25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 text-center">
                     <p className="text-white mb-4">Room ID: <strong>{room}</strong></p>
                     <input

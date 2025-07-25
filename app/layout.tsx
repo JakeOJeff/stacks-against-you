@@ -30,19 +30,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-gray-950 overflow-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-950`}
       >
-        {/* Background stays persistent */}
-        <Silk
-          speed={10}
-          scale={1}
-          color="#1b2436"
-          noiseIntensity={1.2}
-          rotation={0}
-        />
+        {/* Persistent Silk Background */}
+        <div className="fixed inset-0 -z-10 pointer-events-none">
+          <Silk
+            speed={10}
+            scale={1}
+            color="#1b2436"
+            noiseIntensity={1.2}
+            rotation={0}
+          />
+        </div>
 
-        {/* Route content goes here */}
-        <div className="absolute inset-0 z-10">
+        {/* Page Transitions */}
+        <div className="relative z-10">
           {children}
         </div>
       </body>

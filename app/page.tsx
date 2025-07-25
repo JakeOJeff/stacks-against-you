@@ -15,13 +15,7 @@ export default function Home() {
     <PageWrapper>
 
       <main className="relative flex flex-col items-center justify-center h-screen overflow-hidden">
-        <Silk
-          speed={10}
-          scale={1}
-          color="#1b2436"
-          noiseIntensity={1.2}
-          rotation={0}
-        />
+
 
         <div>
           <Link
