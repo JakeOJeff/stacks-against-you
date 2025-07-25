@@ -35,10 +35,10 @@ export default function RootLayout({
         {/* Persistent Silk Background */}
         <div className="fixed inset-0 -z-10 pointer-events-none">
           <Silk
-            speed={10}
+            speed={5}
             scale={1}
             color="#1b2436"
-            noiseIntensity={1.2}
+            noiseIntensity={.5}
             rotation={0}
           />
         </div>
